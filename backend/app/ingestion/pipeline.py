@@ -1,6 +1,5 @@
 """Ingestion pipeline — runs on app startup. Loads menu.json → chunks → builds prompt."""
 
-import json
 from pathlib import Path
 
 from app.config import settings
@@ -32,7 +31,6 @@ def _build_prompt(s: MenuStore) -> str:
     )
     return settings.SYSTEM_PROMPT_TEMPLATE.format(
         restaurant_name=s.restaurant["name"],
-        menu_json=json.dumps(s.menu, indent=2),
         locations_text=locations_text,
         phone=s.restaurant["phone"],
     )

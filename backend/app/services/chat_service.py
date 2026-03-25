@@ -88,7 +88,7 @@ def get_response(message: str, session: dict) -> str:
     for _ in range(10):
         response = client.messages.create(
             model=settings.CLAUDE_MODEL,
-            max_tokens=1024,
+            max_tokens=600,
             system=store.system_prompt,
             tools=TOOLS,
             messages=messages,
@@ -135,7 +135,7 @@ def get_response_stream(message: str, session: dict):
 
         with client.messages.stream(
             model=settings.CLAUDE_MODEL,
-            max_tokens=1024,
+            max_tokens=600,
             system=store.system_prompt,
             tools=TOOLS,
             messages=messages,
