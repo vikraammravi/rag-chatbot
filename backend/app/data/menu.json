@@ -1,0 +1,342 @@
+{
+  "restaurant": {
+    "name": "Aaha Truly South",
+    "tagline": "Authentic South Indian Vegetarian Breakfast",
+    "phone": "+1 416-439-0909",
+    "type": "Pure Vegetarian",
+    "rating": 4.4,
+    "hours": {
+      "sunday": "9:00 AM - 10:45 PM",
+      "monday_to_wednesday": "9:00 AM - 9:45 PM",
+      "thursday_to_saturday": "9:00 AM - 10:45 PM"
+    }
+  },
+  "locations": {
+    "scarborough": {
+      "address": "1177 Brimley Rd, Scarborough, ON M1P 3G5",
+      "phone": "+1 416-439-0909",
+      "order_link": "https://order.tbdine.com/pickup/55608"
+    },
+    "downtown": {
+      "address": "250 Dundas St W, Toronto, ON M5T 2Z5",
+      "phone": "+1 416-439-0909",
+      "order_link": "https://gosnappy.io/owa/r/aaha-truly-south/6843/menu_959"
+    }
+  },
+  "menu": {
+    "idly": [
+      {
+        "name": "Plain Idly",
+        "price": 9.99,
+        "desc": "Soft, fluffy steamed rice cakes served with sambar & chutney",
+        "spicy": false,
+        "tags": ["mild", "kids", "healthy", "steamed", "popular"],
+        "rating": 91
+      },
+      {
+        "name": "Ghee Idly",
+        "price": 10.49,
+        "desc": "Steamed rice cakes topped with ghee",
+        "spicy": false,
+        "tags": ["ghee", "mild", "kids"],
+        "rating": 100
+      },
+      {
+        "name": "Ghee Podi Idly",
+        "price": 10.99,
+        "desc": "Idly tossed in ghee and spicy gun powder",
+        "spicy": true,
+        "tags": ["ghee", "spicy", "podi"],
+        "rating": 100
+      },
+      {
+        "name": "Sambar Idly",
+        "price": 10.99,
+        "desc": "Soft idly dipped in hot sambar — #2 most liked item",
+        "spicy": false,
+        "tags": ["sambar", "popular", "bestseller", "comfort"],
+        "rating": 90
+      },
+      {
+        "name": "Mini Idly",
+        "price": 8.99,
+        "desc": "Bite-sized mini idlies served with sambar & chutney",
+        "spicy": false,
+        "tags": ["mild", "kids", "snack", "mini"]
+      },
+      {
+        "name": "Mini Ghee Podi Idly",
+        "price": 10.99,
+        "desc": "Mini idlies tossed in ghee and spice powder",
+        "spicy": true,
+        "tags": ["ghee", "spicy", "mini"],
+        "rating": 75
+      },
+      {
+        "name": "Thatte Idly",
+        "price": 8.99,
+        "desc": "Large, flat and popular variant of soft steamed rice cake",
+        "spicy": false,
+        "tags": ["traditional", "large", "flat"],
+        "rating": 76
+      },
+      {
+        "name": "Mini Sambar Idly",
+        "price": 9.99,
+        "desc": "Mini idlies dipped in sambar",
+        "spicy": false,
+        "tags": ["mild", "sambar", "mini", "kids"]
+      }
+    ],
+    "vada": [
+      {
+        "name": "Plain Vada",
+        "price": 8.99,
+        "desc": "Crispy urad dal fritters served with sambar & chutney",
+        "spicy": false,
+        "tags": ["crispy", "snack", "fried"],
+        "rating": 76
+      },
+      {
+        "name": "Sambar Vada",
+        "price": 10.99,
+        "desc": "Crispy vada soaked in hot sambar",
+        "spicy": false,
+        "tags": ["sambar", "traditional", "soaked", "popular"],
+        "rating": 74
+      },
+      {
+        "name": "Curd Vada",
+        "price": 9.99,
+        "desc": "Vada in seasoned yogurt with salt",
+        "spicy": false,
+        "tags": ["mild", "cool", "refreshing", "yogurt", "curd"]
+      }
+    ],
+    "idly_vada_combos": [
+      {
+        "name": "2 Idly 1 Vada",
+        "price": 11.49,
+        "desc": "Combo of 2 idlies and 1 vada with sambar & chutney",
+        "spicy": false,
+        "tags": ["combo", "value", "popular"],
+        "rating": 70
+      },
+      {
+        "name": "2 Vada 1 Idly",
+        "price": 11.99,
+        "desc": "Combo of 2 vadas and 1 idly with sambar & chutney",
+        "spicy": false,
+        "tags": ["combo", "value"],
+        "rating": 100
+      },
+      {
+        "name": "Sambar Idly & Vada",
+        "price": 10.99,
+        "desc": "Idly and vada combo dipped in sambar",
+        "spicy": false,
+        "tags": ["combo", "sambar", "value"]
+      }
+    ],
+    "signature_dosas": [
+      {
+        "name": "Plain Dosa",
+        "price": 10.99,
+        "desc": "Classic thin crispy South Indian crepe",
+        "spicy": false,
+        "tags": ["crispy", "classic", "simple"],
+        "rating": 80
+      },
+      {
+        "name": "Onion Dosa",
+        "price": 11.49,
+        "desc": "Crispy dosa topped with onions",
+        "spicy": false,
+        "tags": ["crispy", "onion"],
+        "rating": 75
+      },
+      {
+        "name": "Masala Dosa",
+        "price": 12.99,
+        "desc": "Dosa stuffed with spiced potato masala filling",
+        "spicy": true,
+        "tags": ["popular", "potato", "crispy", "bestseller", "masala"],
+        "rating": 88
+      },
+      {
+        "name": "Mysore Masala Dosa",
+        "price": 13.99,
+        "desc": "Dosa with red chutney spread and potato masala — #5 most liked",
+        "spicy": true,
+        "tags": ["spicy", "popular", "mysore", "chutney"],
+        "rating": 63
+      },
+      {
+        "name": "Ghee Roast Dosa",
+        "price": 11.99,
+        "desc": "Crispy dosa roasted in ghee",
+        "spicy": false,
+        "tags": ["ghee", "crispy", "roast"]
+      },
+      {
+        "name": "Gun Powder Dosa",
+        "price": 13.99,
+        "desc": "Dosa topped with spicy gun powder (podi)",
+        "spicy": true,
+        "tags": ["spicy", "podi", "gunpowder"]
+      },
+      {
+        "name": "Ravva Onion Dosa",
+        "price": 15.99,
+        "desc": "Crispy semolina crepe with onion topping",
+        "spicy": false,
+        "tags": ["crispy", "rava", "semolina", "onion"]
+      },
+      {
+        "name": "Ulli Karam Dosa",
+        "price": 13.99,
+        "desc": "Dosa with onion and spice chutney filling",
+        "spicy": true,
+        "tags": ["spicy", "onion", "chutney"],
+        "rating": 77
+      }
+    ],
+    "uttapam": [
+      {
+        "name": "Onion Uttapam",
+        "price": 11.49,
+        "desc": "Thick rice pancake topped with chopped onions",
+        "spicy": false,
+        "tags": ["onion", "mild", "pancake"],
+        "rating": 80
+      }
+    ],
+    "specials": [
+      {
+        "name": "Mysore Bonda",
+        "price": 13.99,
+        "desc": "Crispy deep-fried spiced lentil fritters — #1 most liked item!",
+        "spicy": true,
+        "tags": ["crispy", "fried", "popular", "bestseller", "snack"],
+        "rating": 79
+      },
+      {
+        "name": "Puri",
+        "price": 12.99,
+        "desc": "Deep-fried puffed bread served with potato masala",
+        "spicy": false,
+        "tags": ["fried", "puffed", "potato", "bread"],
+        "rating": 73
+      },
+      {
+        "name": "Porota",
+        "price": 13.99,
+        "desc": "Layered flaky South Indian flatbread — #3 most liked item!",
+        "spicy": false,
+        "tags": [
+          "bread",
+          "flaky",
+          "layered",
+          "popular",
+          "bestseller",
+          "parotta"
+        ],
+        "rating": 82
+      },
+      {
+        "name": "Upma Ghee Pesarattu",
+        "price": 12.99,
+        "desc": "Green moong dal crepe filled with upma and topped with ghee",
+        "spicy": false,
+        "tags": ["pesarattu", "ghee", "moong", "healthy", "protein"],
+        "rating": 100
+      },
+      {
+        "name": "Ghee Pongal",
+        "price": 11.99,
+        "desc": "Pepper & cumin rice-lentil porridge with ghee",
+        "spicy": false,
+        "tags": ["comfort", "ghee", "traditional", "warm", "pongal"],
+        "rating": 76
+      },
+      {
+        "name": "Tomato Bath (Upma)",
+        "price": 10.99,
+        "desc": "Semolina upma cooked with tomato and spices",
+        "spicy": false,
+        "tags": ["healthy", "tomato", "upma"],
+        "rating": 66
+      }
+    ],
+    "beverages": [
+      {
+        "name": "Badam Milk",
+        "price": 5.49,
+        "desc": "Warm almond milk drink",
+        "spicy": false,
+        "tags": ["warm", "kids", "almond", "nutty", "drink"],
+        "rating": 87
+      },
+      {
+        "name": "Filter Coffee",
+        "price": 4.49,
+        "desc": "Authentic South Indian filter coffee",
+        "spicy": false,
+        "tags": ["hot", "popular", "coffee", "classic"]
+      },
+      {
+        "name": "Masala Chai",
+        "price": 4.49,
+        "desc": "Spiced Indian tea",
+        "spicy": false,
+        "tags": ["hot", "spiced", "tea"]
+      },
+      {
+        "name": "Mango Lassi",
+        "price": 5.99,
+        "desc": "Creamy mango yogurt drink",
+        "spicy": false,
+        "tags": ["cold", "sweet", "kids", "popular", "mango", "refreshing"]
+      },
+      {
+        "name": "Buttermilk",
+        "price": 3.99,
+        "desc": "Spiced churned yogurt drink",
+        "spicy": false,
+        "tags": ["cold", "refreshing", "digestive"]
+      }
+    ],
+    "desserts": [
+      {
+        "name": "Gulab Jamun",
+        "price": 5.99,
+        "desc": "Deep-fried milk dumplings in sugar syrup",
+        "spicy": false,
+        "tags": ["sweet", "popular", "classic", "syrupy"]
+      },
+      {
+        "name": "Kesari",
+        "price": 5.99,
+        "desc": "Saffron-flavored semolina sweet",
+        "spicy": false,
+        "tags": ["sweet", "saffron", "traditional"]
+      }
+    ],
+    "indian_bread": [
+      {
+        "name": "Porota",
+        "price": 13.99,
+        "desc": "Layered flaky South Indian flatbread with kurma",
+        "spicy": false,
+        "tags": ["bread", "flaky", "layered", "parotta"]
+      },
+      {
+        "name": "Puri",
+        "price": 12.99,
+        "desc": "Deep-fried puffed bread with potato masala",
+        "spicy": false,
+        "tags": ["bread", "fried", "puffed", "potato"]
+      }
+    ]
+  }
+}
