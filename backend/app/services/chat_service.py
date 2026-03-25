@@ -125,22 +125,29 @@ def get_response(message: str, session: dict) -> str:
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 def get_response_stream(message: str, session: dict):
-    """Tool calls happen silently, then final answer streams word-by-word."""
+    """True token streaming — text appears as Claude generates it."""
     store = get_store()
     session["conversation_history"].append({"role": "user", "content": message})
     messages = session["conversation_history"]
 
     for _ in range(10):
-        response = client.messages.create(
+        streamed_text = ""
+
+        with client.messages.stream(
             model=settings.CLAUDE_MODEL,
             max_tokens=1024,
             system=store.system_prompt,
             tools=TOOLS,
             messages=messages,
-        )
+        ) as stream:
+            for text in stream.text_stream:
+                streamed_text += text
+                yield {"type": "token", "text": text}
 
-        if response.stop_reason == "tool_use":
-            messages.append({"role": "assistant", "content": response.content})
+            final = stream.get_final_message()
+
+        if final.stop_reason == "tool_use":
+            messages.append({"role": "assistant", "content": final.content})
             yield {"type": "status", "text": "Looking up menu..."}
 
             tool_results = [
@@ -149,23 +156,18 @@ def get_response_stream(message: str, session: dict):
                     "tool_use_id": block.id,
                     "content": _execute_tool(block.name, block.input, session, store),
                 }
-                for block in response.content
+                for block in final.content
                 if block.type == "tool_use"
             ]
             messages.append({"role": "user", "content": tool_results})
             continue
 
-        if response.stop_reason == "end_turn":
-            bot_text = "".join(b.text for b in response.content if hasattr(b, "text"))
-            messages.append({"role": "assistant", "content": bot_text})
+        if final.stop_reason == "end_turn":
+            messages.append({"role": "assistant", "content": streamed_text})
             session["conversation_history"] = messages
-
-            words = bot_text.split(" ")
-            for i, word in enumerate(words):
-                yield {"type": "token", "text": word if i == 0 else " " + word}
             return
 
-        logger.warning("Unexpected stop_reason: %s", response.stop_reason)
+        logger.warning("Unexpected stop_reason: %s", final.stop_reason)
         break
 
     yield {"type": "token", "text": FALLBACK_MSG}
