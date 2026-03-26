@@ -55,12 +55,30 @@ export function MessageList({ messages, isLoading, isStreaming }: MessageListPro
                 {msg.text}
               </span>
             ) : (
-              msg.text.split("\n").map((line, j, arr) => (
-                <span key={j}>
-                  {line}
-                  {j < arr.length - 1 && <br />}
-                </span>
-              ))
+              msg.text.split("\n").map((line, j, arr) => {
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                const parts = line.split(urlRegex);
+                return (
+                  <span key={j}>
+                    {parts.map((part, k) =>
+                      part.startsWith("http://") || part.startsWith("https://") ? (
+                        <a
+                          key={k}
+                          href={part}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: "#D4A24E", textDecoration: "underline", wordBreak: "break-all" }}
+                        >
+                          Click here to pay
+                        </a>
+                      ) : (
+                        part
+                      )
+                    )}
+                    {j < arr.length - 1 && <br />}
+                  </span>
+                );
+              })
             )}
           </div>
         ),
