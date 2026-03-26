@@ -1,15 +1,17 @@
 # Aaha Truly South — AI Restaurant Chatbot
 
+> **Built with:** Claude API · Tool Use · Real-time SSE Streaming · RAG-style menu retrieval · Stripe Payments · FastAPI · Next.js 16
+
 An AI-powered chat widget for [Aaha Truly South](https://aahatrulysouth.com), an authentic South Indian vegetarian restaurant in Toronto. Customers can explore the menu, build a cart, and place pickup orders through a conversational interface powered by Claude.
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Python 3.10+, FastAPI, Uvicorn |
-| AI | Anthropic Claude API (tool use + true token streaming) |
-| Frontend | Next.js 16, React 19, TypeScript |
-| Styling | Tailwind CSS v4 |
+| Layer    | Technology                                             |
+| -------- | ------------------------------------------------------ |
+| Backend  | Python 3.10+, FastAPI, Uvicorn                         |
+| AI       | Anthropic Claude API (tool use + true token streaming) |
+| Frontend | Next.js 16, React 19, TypeScript                       |
+| Styling  | Tailwind CSS v4                                        |
 
 ---
 
@@ -73,14 +75,14 @@ The app will be available at `http://localhost:3000`
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Root check |
-| `GET` | `/api/health` | Server status + session count + menu item count |
-| `GET` | `/api/menu` | Full menu JSON |
-| `POST` | `/api/chat` | Non-streaming chat response |
-| `POST` | `/api/chat/stream` | Streaming SSE chat response (used by frontend) |
-| `DELETE` | `/api/session/{id}` | Clear a session and cart |
+| Method   | Endpoint            | Description                                     |
+| -------- | ------------------- | ----------------------------------------------- |
+| `GET`    | `/`                 | Root check                                      |
+| `GET`    | `/api/health`       | Server status + session count + menu item count |
+| `GET`    | `/api/menu`         | Full menu JSON                                  |
+| `POST`   | `/api/chat`         | Non-streaming chat response                     |
+| `POST`   | `/api/chat/stream`  | Streaming SSE chat response (used by frontend)  |
+| `DELETE` | `/api/session/{id}` | Clear a session and cart                        |
 
 ---
 
@@ -88,35 +90,16 @@ The app will be available at `http://localhost:3000`
 
 ### Backend (`backend/.env`)
 
-| Variable | Required | Default | Description |
-|---|---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | — | Your Anthropic API key from console.anthropic.com |
-| `CLAUDE_MODEL` | No | `claude-haiku-4-5-20251001` | Claude model ID. Switch to `claude-sonnet-4-6` for higher quality |
+| Variable            | Required | Default                     | Description                                                       |
+| ------------------- | -------- | --------------------------- | ----------------------------------------------------------------- |
+| `ANTHROPIC_API_KEY` | Yes      | —                           | Your Anthropic API key from console.anthropic.com                 |
+| `CLAUDE_MODEL`      | No       | `claude-haiku-4-5-20251001` | Claude model ID. Switch to `claude-sonnet-4-6` for higher quality |
 
 ### Frontend (`frontend/.env.local`)
 
-| Variable | Required | Default | Description |
-|---|---|---|---|
+| Variable              | Required   | Default                 | Description      |
+| --------------------- | ---------- | ----------------------- | ---------------- |
 | `NEXT_PUBLIC_API_URL` | Yes (prod) | `http://localhost:8000` | Backend base URL |
-
----
-
-## Performance
-
-The chatbot is optimised for fast perceived response time:
-
-| Optimisation | Detail |
-|---|---|
-| **True token streaming** | Uses `client.messages.stream()` — first words appear within ~300ms instead of waiting for the full response |
-| **Haiku model by default** | `claude-haiku-4-5-20251001` is 3–5x faster and cheaper than Sonnet for simple menu/cart queries |
-| **Tool-based menu lookup** | The full menu JSON is not sent with every request — Claude calls `search_menu` at runtime, keeping the prompt ~200 tokens instead of ~2500 |
-| **FAQ cache** | 18 common questions (hours, address, vegetarian, delivery, catering, allergies, etc.) are answered instantly without an API call |
-| **`max_tokens: 600`** | Responses are capped at 600 tokens — enough for 2–3 sentence answers with menu listings, avoids wasted latency budget |
-
-To switch to a higher-quality but slower model, set in `backend/.env`:
-```
-CLAUDE_MODEL=claude-sonnet-4-6
-```
 
 ---
 
