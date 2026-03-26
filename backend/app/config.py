@@ -16,10 +16,11 @@ class Settings:
     STRIPE_SUCCESS_URL: str = os.getenv("STRIPE_SUCCESS_URL", "http://localhost:3000?payment=success")
     STRIPE_CANCEL_URL: str = os.getenv("STRIPE_CANCEL_URL", "http://localhost:3000?payment=cancelled")
     DATA_DIR: Path = Path(__file__).parent / "data"
-    CORS_ORIGINS: list = [
-        "http://localhost:3000",
-        "https://aahatrulysouth.com",
-    ]
+    # Comma-separated list of allowed origins — add your Vercel URL here in production
+    CORS_ORIGINS: list = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:3000,https://aahatrulysouth.com",
+    ).split(",")
     FAQ_CACHE: dict = {
         # Hours & location
         "are you open":   f"We're open daily! Scarborough: 1177 Brimley Rd | Downtown: 250 Dundas St W. Call {RESTAURANT_PHONE} for current hours.",
