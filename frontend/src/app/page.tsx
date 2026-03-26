@@ -20,18 +20,30 @@ export default function Home() {
     >
       <div
         style={{
-          width: 64,
-          height: 64,
+          width: 96,
+          height: 96,
           borderRadius: "50%",
-          background: "linear-gradient(135deg, #D4A24E, #B8872E)",
+          background: "linear-gradient(135deg, #2C1810, #1A1A1A)",
+          border: "2px solid #D4A24E44",
+          boxShadow: "0 0 0 6px #D4A24E11, 0 8px 32px rgba(0,0,0,0.4)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 28,
           marginBottom: 8,
+          overflow: "hidden",
         }}
       >
-        🍛
+        <img
+          src="https://aahatrulysouth.com/wp-content/uploads/2024/11/cropped-Aaha-Logo.png"
+          alt="Aaha Truly South"
+          style={{ width: 80, height: 80, objectFit: "contain", borderRadius: "50%" }}
+          onError={(e) => {
+            const el = e.currentTarget;
+            el.style.display = "none";
+            el.parentElement!.style.fontSize = "36px";
+            el.parentElement!.innerText = "🍛";
+          }}
+        />
       </div>
 
       <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700, color: "#F5EDE0" }}>
