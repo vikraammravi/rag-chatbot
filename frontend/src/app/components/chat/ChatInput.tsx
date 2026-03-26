@@ -25,17 +25,7 @@ export function ChatInput({ value, onChange, onSend, disabled, focus }: ChatInpu
   };
 
   return (
-    <div
-      style={{
-        padding: "10px 12px",
-        borderTop: "1px solid #2A2A2A",
-        display: "flex",
-        gap: 8,
-        alignItems: "flex-end",
-        background: "#141414",
-        flexShrink: 0,
-      }}
-    >
+    <div className="px-3 py-[10px] border-t border-[#2A2A2A] flex gap-2 items-end bg-bg shrink-0">
       <textarea
         ref={inputRef}
         rows={1}
@@ -43,42 +33,16 @@ export function ChatInput({ value, onChange, onSend, disabled, focus }: ChatInpu
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Ask about our menu, catering..."
-        style={{
-          flex: 1,
-          padding: "10px 14px",
-          borderRadius: 24,
-          border: "1px solid #3A3A3A",
-          background: "#222",
-          color: "#F5EDE0",
-          fontSize: 13.5,
-          outline: "none",
-          resize: "none",
-          maxHeight: 80,
-          fontFamily: "inherit",
-          lineHeight: 1.4,
-        }}
-        onFocus={(e) => (e.target.style.borderColor = "#D4A24E55")}
-        onBlur={(e) => (e.target.style.borderColor = "#3A3A3A")}
+        className="flex-1 px-[14px] py-[10px] rounded-[24px] border border-[#3A3A3A] bg-[#222] text-cream text-[13.5px] outline-none resize-none max-h-[80px] font-sans leading-[1.4] focus:border-gold/30 transition-colors duration-150"
       />
       <button
         onClick={onSend}
         disabled={disabled || !value.trim()}
         aria-label="Send message"
-        style={{
-          width: 38,
-          height: 38,
-          borderRadius: "50%",
-          border: "none",
-          background: "#D4A24E",
-          color: "#1A1A1A",
-          cursor: disabled || !value.trim() ? "not-allowed" : "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexShrink: 0,
-          opacity: value.trim() ? 1 : 0.4,
-          transition: "all 0.15s",
-        }}
+        className={[
+          "w-[38px] h-[38px] rounded-full border-none bg-gold text-[#1A1A1A] flex items-center justify-center shrink-0 transition-all duration-150",
+          disabled || !value.trim() ? "opacity-40 cursor-not-allowed" : "cursor-pointer",
+        ].join(" ")}
       >
         <svg
           width="16"

@@ -8,43 +8,12 @@ interface QuickRepliesProps {
 
 export function QuickReplies({ onSelect }: QuickRepliesProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: 6,
-        padding: "8px 12px 10px",
-        background: "#141414",
-      }}
-    >
+    <div className="flex flex-wrap gap-[6px] px-3 pt-2 pb-[10px] bg-bg">
       {QUICK_REPLIES.map((q) => (
         <button
           key={q}
           onClick={() => onSelect(q)}
-          style={{
-            padding: "6px 14px",
-            borderRadius: 20,
-            border: "1.5px solid #D4A24E55",
-            background: "transparent",
-            color: "#D4A24E",
-            fontSize: 11.5,
-            fontWeight: 600,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-            transition: "all 0.15s",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget;
-            el.style.background = "#D4A24E";
-            el.style.color = "#1A1A1A";
-            el.style.borderColor = "#D4A24E";
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget;
-            el.style.background = "transparent";
-            el.style.color = "#D4A24E";
-            el.style.borderColor = "#D4A24E55";
-          }}
+          className="px-[14px] py-[6px] rounded-[20px] border border-gold/30 bg-transparent text-gold text-[11.5px] font-semibold cursor-pointer whitespace-nowrap transition-all duration-150 hover:bg-gold hover:text-[#1A1A1A] hover:border-gold"
         >
           {q}
         </button>

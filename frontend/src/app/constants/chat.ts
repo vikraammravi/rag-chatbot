@@ -12,4 +12,4 @@ export const QUICK_REPLIES = [
 ];
 
 export const INITIAL_BOT_MESSAGE =
-  "Vanakkam! Welcome to Aaha Truly South — authentic South Indian vegetarian tiffin. I can help you explore our menu, recommend dishes, or assist with catering. What sounds good?";
+  "Welcome to Aaha Truly South. I can help you explore our menu, recommend dishes, or assist with catering. What can I get for you?";

@@ -26,26 +26,7 @@ export default function ChatWidget() {
   return (
     <>
       {isOpen && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 96,
-            right: 16,
-            width: 390,
-            maxWidth: "calc(100vw - 24px)",
-            height: 580,
-            maxHeight: "calc(100vh - 120px)",
-            borderRadius: 20,
-            overflow: "hidden",
-            boxShadow: "0 12px 48px rgba(0,0,0,0.35)",
-            display: "flex",
-            flexDirection: "column",
-            zIndex: 99998,
-            fontFamily: "'DM Sans', 'Segoe UI', system-ui, sans-serif",
-            background: "#141414",
-            border: "1px solid #2A2A2A",
-          }}
-        >
+        <div className="fixed bottom-24 right-4 w-[390px] max-w-[calc(100vw-24px)] h-[580px] max-h-[calc(100vh-120px)] rounded-[20px] overflow-hidden shadow-[0_12px_48px_rgba(0,0,0,0.35)] flex flex-col z-[99998] font-sans bg-bg border border-[#2A2A2A]">
           <ChatHeader onClose={() => setIsOpen(false)} />
           <CartPanel cart={cart} cartTotal={cartTotal} />
           <MessageList
@@ -61,15 +42,7 @@ export default function ChatWidget() {
             disabled={isLoading || isStreaming}
             focus={isOpen}
           />
-          <div
-            style={{
-              textAlign: "center",
-              fontSize: 9,
-              color: "#555",
-              padding: "4px 0 6px",
-              background: "#141414",
-            }}
-          >
+          <div className="text-center text-[9px] text-[#555] pt-1 pb-1.5 bg-bg">
             Powered by AI
           </div>
         </div>

@@ -19,9 +19,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
-        {children}
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

@@ -10,31 +10,7 @@ export function ChatFAB({ isOpen, onClick }: ChatFABProps) {
     <button
       onClick={onClick}
       aria-label={isOpen ? "Close chat" : "Open chat"}
-      style={{
-        position: "fixed",
-        bottom: 20,
-        right: 20,
-        width: 62,
-        height: 62,
-        borderRadius: "50%",
-        background: "linear-gradient(135deg, #D4A24E, #B8872E)",
-        border: "2px solid #D4A24E44",
-        cursor: "pointer",
-        boxShadow: "0 4px 24px rgba(212,162,78,0.35)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 99999,
-        transition: "all 0.2s",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = "scale(1.08)";
-        e.currentTarget.style.boxShadow = "0 6px 32px rgba(212,162,78,0.5)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "scale(1)";
-        e.currentTarget.style.boxShadow = "0 4px 24px rgba(212,162,78,0.35)";
-      }}
+      className="fixed bottom-5 right-5 w-[62px] h-[62px] rounded-full bg-gradient-to-br from-gold to-gold-dark border-2 border-gold/25 cursor-pointer shadow-[0_4px_24px_rgba(212,162,78,0.35)] flex items-center justify-center z-[99999] transition-all duration-200 hover:scale-[1.08] hover:shadow-[0_6px_32px_rgba(212,162,78,0.5)]"
     >
       {isOpen ? (
         <svg
