@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "../hooks/useChat";
 import { ChatFAB } from "./chat/ChatFAB";
 import { ChatHeader } from "./chat/ChatHeader";
@@ -20,8 +20,14 @@ export default function ChatWidget() {
     cart,
     cartTotal,
     showQuickReplies,
+    paymentSuccess,
+    paymentCancelled,
     sendMessage,
   } = useChat();
+
+  useEffect(() => {
+    if (paymentSuccess || paymentCancelled) setIsOpen(true);
+  }, [paymentSuccess, paymentCancelled]);
 
   return (
     <>

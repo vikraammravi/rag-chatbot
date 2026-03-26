@@ -1,8 +1,32 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Message, CartItem } from "../types/chat";
 import { API_URL, RESTAURANT_PHONE, INITIAL_BOT_MESSAGE } from "../constants/chat";
+
+const PAYMENT_SUCCESS_MESSAGE =
+  "Your payment was successful! Your order is confirmed and will be ready for pickup. Thank you for ordering from Aaha Truly South!";
+
+const PAYMENT_CANCELLED_MESSAGE =
+  "No worries — your order is still saved. Whenever you're ready, just say 'checkout' and we'll pick up right where you left off.";
+
+const STORAGE_KEY = "aaha_chat_session";
+
+function saveSession(sessionId: string | null, messages: Message[], cart: CartItem[], cartTotal: number) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ sessionId, messages, cart, cartTotal }));
+  } catch {}
+}
+
+function loadSession() {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw) as { sessionId: string | null; messages: Message[]; cart: CartItem[]; cartTotal: number };
+  } catch {
+    return null;
+  }
+}
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([
@@ -15,6 +39,41 @@ export function useChat() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [showQuickReplies, setShowQuickReplies] = useState(true);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentCancelled, setPaymentCancelled] = useState(false);
+
+  // On mount: restore session if returning from Stripe (success or cancel)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const payment = params.get("payment");
+
+    if (payment === "success" || payment === "cancelled") {
+      const saved = loadSession();
+      const baseMessages = saved?.messages ?? [{ role: "bot" as const, text: INITIAL_BOT_MESSAGE }];
+      const followUp = payment === "success" ? PAYMENT_SUCCESS_MESSAGE : PAYMENT_CANCELLED_MESSAGE;
+
+      if (saved) {
+        setSessionId(saved.sessionId);
+        setCart(saved.cart);
+        setCartTotal(saved.cartTotal);
+      }
+
+      setMessages([...baseMessages, { role: "bot", text: followUp }]);
+      setShowQuickReplies(false);
+      if (payment === "success") setPaymentSuccess(true);
+      if (payment === "cancelled") setPaymentCancelled(true);
+
+      window.history.replaceState({}, "", window.location.pathname);
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+  }, []);
+
+  // Persist session whenever it changes so Stripe redirect can restore it
+  useEffect(() => {
+    if (sessionId) {
+      saveSession(sessionId, messages, cart, cartTotal);
+    }
+  }, [sessionId, messages, cart, cartTotal]);
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -118,6 +177,8 @@ export function useChat() {
     cart,
     cartTotal,
     showQuickReplies,
+    paymentSuccess,
+    paymentCancelled,
     sendMessage,
   };
 }

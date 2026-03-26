@@ -37,7 +37,7 @@ export function MessageList({ messages, isLoading, isStreaming }: MessageListPro
               <span className="text-gold italic text-xs">{msg.text}</span>
             ) : (
               msg.text.split("\n").map((line, j, arr) => {
-                const parts = line.split(/(https?:\/\/[^\s]+)/g);
+                const parts = line.split(/(https?:\/\/[^\s.,)}\]>]+)/g);
                 return (
                   <span key={j}>
                     {parts.map((part, k) =>

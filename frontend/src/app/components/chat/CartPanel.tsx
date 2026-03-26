@@ -34,8 +34,8 @@ export function CartPanel({ cart, cartTotal }: CartPanelProps) {
 
       {showCart && (
         <div className="bg-surface border-b border-[#333] px-4 py-[10px] max-h-[140px] overflow-y-auto">
-          {cart.map((item, i) => (
-            <div key={i} className="flex justify-between text-xs py-[3px] text-[#ccc]">
+          {cart.map((item) => (
+            <div key={item.name} className="flex justify-between text-xs py-[3px] text-[#ccc]">
               <span>
                 {item.quantity}x {item.name}
               </span>
