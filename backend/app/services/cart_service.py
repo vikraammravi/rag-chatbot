@@ -1,10 +1,19 @@
+
 """Cart operations — add, remove, view, checkout."""
 
 import uuid
+import logging
+import stripe
+
+from app.config import settings, RESTAURANT_PHONE
 from app.ingestion.loader import MenuStore
 from app.services.menu_search import find_by_name
 
 TAX_RATE = 0.13
+
+logger = logging.getLogger(__name__)
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def add_item(session: dict, store: MenuStore, item_name: str, quantity: int = 1, notes: str = "") -> str:
@@ -72,18 +81,58 @@ def create_checkout(session: dict) -> str:
         return "Set a pickup location first (Scarborough or Downtown)."
     if not session.get("customer_name") or not session.get("customer_phone"):
         return "Collect customer name and phone first."
+    if not settings.STRIPE_SECRET_KEY:
+        return f"Online payment is not configured yet. Please call {RESTAURANT_PHONE} to complete your order."
 
-    total = get_total(session)
-    tax = round(total * TAX_RATE, 2)
-    grand = round(total + tax, 2)
     order_id = str(uuid.uuid4())[:6].upper()
-    items_summary = ", ".join(f"{i['quantity']}x {i['name']}" for i in session["cart"])
+
+    # Build Stripe line items — prices converted to cents
+    line_items = [
+        {
+            "price_data": {
+                "currency": "cad",
+                "product_data": {
+                    "name": item["name"],
+                    **({"description": item["notes"]} if item.get("notes") else {}),
+                },
+                "unit_amount": round(item["price"] * 100),
+            },
+            "quantity": item["quantity"],
+        }
+        for item in session["cart"]
+    ]
+
+    # HST as a separate line item
+    tax_cents = round(get_total(session) * TAX_RATE * 100)
+    line_items.append({
+        "price_data": {
+            "currency": "cad",
+            "product_data": {"name": "HST (13%)"},
+            "unit_amount": tax_cents,
+        },
+        "quantity": 1,
+    })
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=line_items,
+            mode="payment",
+            success_url=settings.STRIPE_SUCCESS_URL,
+            cancel_url=settings.STRIPE_CANCEL_URL,
+            metadata={
+                "order_id": order_id,
+                "customer_name": session.get("customer_name"),
+                "customer_phone": session.get("customer_phone"),
+                "location": session.get("location"),
+            },
+        )
+    except stripe.StripeError as e:
+        logger.error("Stripe error during checkout: %s", e)
+        return f"Payment could not be created. Please call {RESTAURANT_PHONE} to place your order."
 
     return (
-        f"Order #{order_id} ready!\n"
-        f"Customer: {session['customer_name']} ({session['customer_phone']})\n"
-        f"Items: {items_summary}\n"
-        f"Total: ${grand:.2f} CAD\n"
-        f"Pickup: {session['location'].title()}\n\n"
-        f"[Stripe payment link generated here in production]"
+        f"Order #{order_id} is ready!\n"
+        f"Complete your payment here: {checkout_session.url}\n"
+        f"Pickup at: {session['location'].title()} once payment is confirmed."
     )

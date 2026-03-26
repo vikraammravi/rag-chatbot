@@ -12,6 +12,9 @@ RESTAURANT_PHONE = "+1 416-439-0909"
 class Settings:
     ANTHROPIC_API_KEY: str = os.getenv("ANTHROPIC_API_KEY", "")
     CLAUDE_MODEL: str = os.getenv("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+    STRIPE_SECRET_KEY: str = os.getenv("STRIPE_SECRET_KEY", "")
+    STRIPE_SUCCESS_URL: str = os.getenv("STRIPE_SUCCESS_URL", "http://localhost:3000?payment=success")
+    STRIPE_CANCEL_URL: str = os.getenv("STRIPE_CANCEL_URL", "http://localhost:3000?payment=cancelled")
     DATA_DIR: Path = Path(__file__).parent / "data"
     CORS_ORIGINS: list = [
         "http://localhost:3000",
