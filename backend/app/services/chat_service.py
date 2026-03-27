@@ -7,7 +7,7 @@ import anthropic
 from app.config import settings, RESTAURANT_PHONE
 from app.ingestion.loader import MenuStore
 from app.ingestion.pipeline import get_store
-from app.tools.definitions import TOOLS
+from app.tools.definitions import TOOLS, MAX_TOOL_ITERATIONS
 from app.services import menu_search, cart_service
 
 logger = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ def get_response(message: str, session: dict) -> str:
     session["conversation_history"].append({"role": "user", "content": message})
     messages = session["conversation_history"]
 
-    for _ in range(10):
+    for _ in range(MAX_TOOL_ITERATIONS):
         response = client.messages.create(
             model=settings.CLAUDE_MODEL,
             max_tokens=600,
@@ -130,7 +130,7 @@ def get_response_stream(message: str, session: dict):
     session["conversation_history"].append({"role": "user", "content": message})
     messages = session["conversation_history"]
 
-    for _ in range(10):
+    for _ in range(MAX_TOOL_ITERATIONS):
         streamed_text = ""
 
         with client.messages.stream(

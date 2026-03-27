@@ -37,17 +37,17 @@ export function MessageList({ messages, isLoading, isStreaming }: MessageListPro
               <span className="text-gold italic text-xs">{msg.text}</span>
             ) : (
               msg.text.split("\n").map((line, j, arr) => {
-                const parts = line.split(/(https?:\/\/[^\s.,)}\]>]+)/g);
+                const parts = line.split(/(https?:\/\/[^\s]+)/g);
                 return (
                   <span key={j}>
                     {parts.map((part, k) =>
                       part.startsWith("http://") || part.startsWith("https://") ? (
                         <a
                           key={k}
-                          href={part}
+                          href={part.replace(/[.,)}\]>]+$/, "")}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gold underline break-all"
+                          className="text-gold underline font-semibold"
                         >
                           Click here to pay
                         </a>
