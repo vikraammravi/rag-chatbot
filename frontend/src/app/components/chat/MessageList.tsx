@@ -45,8 +45,7 @@ export function MessageList({ messages, isLoading, isStreaming }: MessageListPro
                         <a
                           key={k}
                           href={part.replace(/[.,)}\]>]+$/, "")}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          target="_self"
                           className="text-gold underline font-semibold"
                         >
                           Click here to pay
