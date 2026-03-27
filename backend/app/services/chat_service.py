@@ -129,6 +129,7 @@ def get_response_stream(message: str, session: dict):
     store = get_store()
     session["conversation_history"].append({"role": "user", "content": message})
     messages = session["conversation_history"]
+    payment_url: str | None = None
 
     for _ in range(MAX_TOOL_ITERATIONS):
         streamed_text = ""
@@ -150,19 +151,31 @@ def get_response_stream(message: str, session: dict):
             messages.append({"role": "assistant", "content": final.content})
             yield {"type": "status", "text": "Looking up menu..."}
 
-            tool_results = [
-                {
+            tool_results = []
+            for block in final.content:
+                if block.type != "tool_use":
+                    continue
+                result = _execute_tool(block.name, block.input, session, store)
+                # Extract Stripe URL so we can guarantee it reaches the frontend
+                if block.name == "create_checkout":
+                    import re
+                    match = re.search(r"https://checkout\.stripe\.com/\S+", result)
+                    if match:
+                        payment_url = match.group(0)
+                tool_results.append({
                     "type": "tool_result",
                     "tool_use_id": block.id,
-                    "content": _execute_tool(block.name, block.input, session, store),
-                }
-                for block in final.content
-                if block.type == "tool_use"
-            ]
+                    "content": result,
+                })
             messages.append({"role": "user", "content": tool_results})
             continue
 
         if final.stop_reason == "end_turn":
+            # If Claude omitted the payment URL, append it ourselves
+            if payment_url and payment_url not in streamed_text:
+                suffix = f"\n{payment_url}"
+                yield {"type": "token", "text": suffix}
+                streamed_text += suffix
             messages.append({"role": "assistant", "content": streamed_text})
             session["conversation_history"] = messages
             return
