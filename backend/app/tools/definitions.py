@@ -148,7 +148,8 @@ TOOLS = [
             "(1) cart is not empty, "
             "(2) pickup location is set via set_location, "
             "(3) customer name and phone are saved via collect_customer_info. "
-            "Do NOT call speculatively. If any prerequisite is missing, collect it first."
+            "Do NOT call speculatively. If any prerequisite is missing, collect it first. "
+            "IMPORTANT: after calling this tool, you MUST include the full payment URL exactly as returned in your reply to the customer."
         ),
         "input_schema": {"type": "object", "properties": {}},
     },
