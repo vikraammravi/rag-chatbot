@@ -172,7 +172,7 @@ def get_response_stream(message: str, session: dict):
 
         if final.stop_reason == "end_turn":
             # If Claude omitted the payment URL, append it ourselves
-            if payment_url and payment_url not in streamed_text:
+            if payment_url and "checkout.stripe.com" not in streamed_text:
                 suffix = f"\n{payment_url}"
                 yield {"type": "token", "text": suffix}
                 streamed_text += suffix
